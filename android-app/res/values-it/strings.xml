@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Remote PC Controller</string>
+    <string name="login_label">Per favore inserisci la tua password.</string>
+    <string name="login_btn">Login</string>
+    <string name="login_error">Impossibile loggarsi: password errata.</string>
+    <string name="login_error_btn_ok">Chiudi</string>
+    <string name="title_activity_control">Controllo remoto</string>
+    <string name="pc_toggle">PC Principale</string>
+    <string name="confirm">Sei sicuro di voler %1$s il %2$s?</string>
+    <string name="turnon">accendere</string>
+    <string name="turnoff">spegnere</string>
+    <string name="btn_undo">Annulla</string>
+    <string name="btn_yes">Sì</string>
+    <string name="err_no_conn">Hai appena provato ad usare un servizio di accensione remota di PC senza connessione. Pensi che io mi connetta dallo spazio? Ottimo lavoro.</string>
+    <string name="err_fail_conn">Impossibile connettersi.</string>
+    <string name="wait_please">Un attimo..</string>
+    <string name="loading">Caricamento..</string>
+    <string name="done">Fatto!</string>
+    <string name="tw_data_btn">Mostra dati di TeamViewer</string>
+    <string name="tw_data">Dati di TeamViewer</string>
+    <string name="copy">Copia</string>
+    <string name="copypwd">Copia password</string>
+    <string name="copied">Copiato.</string>
+    <string name="waiting_on">In attesa dell\'accensione del computer..</string>
+    <string name="waiting_off">In attesa dello spegnimento del computer..</string>
+    <string name="about">Informazioni su</string>
+    <string name="about_txt">Applicazione creata da Roberto \'Robertof\' Frenna.\nRilasciata per uso esclusivamente privato!</string>
+    <string name="start_tw">Avvia TeamViewer</string>
+</resources>

@@ -1,0 +1,15 @@
+bin/
+.settings/
+pull-everything.sh
+remove-sensitive-data.sh
+mirror-webserver-stuff.sh
+# stuff from android.gitignore
+*.apk
+*.ap_
+*.dex
+*.class
+gen/
+local.properties
+.classpath
+.project
+proguard/
