@@ -28,5 +28,6 @@
     <string name="start_tw">Start TeamViewer</string>
     <string name="about">About</string>
     <string name="about_txt">App created by Roberto "Robertof" Frenna.\nReleased ONLY for private use!</string>
+    <string name="screenshot">Screenshot</string>
     <string name="twid">INSERT HERE YOUR TEAMVIEWER ID</string>
 </resources>

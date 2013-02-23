@@ -28,4 +28,5 @@
     <string name="about">Informazioni su</string>
     <string name="about_txt">Applicazione creata da Roberto \'Robertof\' Frenna.\nRilasciata per uso esclusivamente privato!</string>
     <string name="start_tw">Avvia TeamViewer</string>
+    <string name="screenshot">Screenshot</string>
 </resources>

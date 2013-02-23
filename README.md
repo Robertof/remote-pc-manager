@@ -33,7 +33,7 @@ Details about the Android app
 I built the app against Android 4.0 SDK. This is because I own a Galaxy Nexus, and I was too lazy to adapt the app to an older SDK version.
 However if you want to, feel free to do it. That's why open source rocks.
 By the way, the app asks for a password on start. You can define that password in the sourcecode, hashed in SHA1.
-Also in the source code you have to define the TeamViewer password if you wanna use TeamViewer. Otherwise, just remove the 2 TW-related buttons.
+Also in the source code you have to define the TeamViewer password if you wanna use TeamViewer. Otherwise, just remove the 2 TW-related menu entries.
 I translated it in Italian and English.
 
 Details about the PHP helper
@@ -54,6 +54,8 @@ There are 2 Perl scripts which are always running on the target PC.
 Here are the details of each script:
 * listen.pl: listens on a port on your internal IP address (you have to specify it in the sourcecode) and waits for the backend (and ONLY the backend - it checks the IP) to send the shutdown request. Actually it creates a fake HTTP server for compatibility with cURL (I had only cURL on my router): when the request is accepted it outputs an empty HTTP reply, otherwise it kills the connection.
 * daemon.pl: sends keepalives to the PHP helper. It provides a basic (and BROKEN) log rotation. Why broken? Because when the log count is > 3, it DELETES them. Sorry but I was too lazy to implement a proper logrotation.
+
+**NOTE**: to shutdown the computer in listen.pl I'm using a Windows-only executable called "psshutdown" (included in the git repo). If you wanna use this on a OS which is not Windows, you need to find another solution (on Linux a simple 'suspend' or 'pm-suspend' should do the trick).
 
 Details about the SH backend
 ----------------------------

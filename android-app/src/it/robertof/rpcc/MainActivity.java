@@ -147,12 +147,13 @@ public class MainActivity extends Activity
             else
                 builder.setMessage (conf.getInt (MSGTXT_KEY));
             builder.setPositiveButton(conf.getInt (YESTXT_KEY), this.b1c)
-            .setNegativeButton(conf.getInt (NOTXT_KEY), this.b2c);
+                .setNegativeButton(conf.getInt (NOTXT_KEY), this.b2c);
             return builder.create();
         }
     }
 
-    public static class SimpleDialogBuilder extends DialogFragment {    
+    public static class SimpleDialogBuilder extends DialogFragment
+    {    
         public static final String BUNDLEKEY = "it.robertof.rpcc.data.msg";
         public static final String ISSTRINGKEY = "it.robertof.rpcc.data.isstring";
         private DialogInterface.OnClickListener listener;

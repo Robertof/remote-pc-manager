@@ -27,8 +27,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class ControlActivity extends Activity {
     private boolean ignoreEv = false;
@@ -38,16 +39,16 @@ public class ControlActivity extends Activity {
     private CheckPCStateRecurringTask currentTask;
     private ProgressDialog workingProgressDialog;
     private String twPwd = "** INSERT YOUR TEAMVIEWER PASSWORD HERE **";
+    
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState)
+    {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_control);
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled (true);
         passwordUsed = getIntent().getStringExtra (MainActivity.PWD_MSG_INTENT);
-        final Switch toggle = (Switch) this.findViewById (R.id.switch1);
-        //Log.e ("it.robertof.rpcc", "Activity recreated.");
-        // check for connectivity
+        final ToggleButton toggle = (ToggleButton) this.findViewById (R.id.toggleButton1);
         final ConnectivityManager connMgr = (ConnectivityManager) getSystemService (Context.CONNECTIVITY_SERVICE);
         if (!this.checkConnection (connMgr))
         {
@@ -93,13 +94,13 @@ public class ControlActivity extends Activity {
                 }, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick (DialogInterface dialog, int which) {
-                        //toggle.setSelected (!isChecked);
                         ignoreEv = true;
                         toggle.setChecked (!isChecked);
                         currentTask.setShouldInterrupt (false);
                         dialog.dismiss();
                     }
                 });
+                frag.setCancelable (false);
                 currentTask.setShouldInterrupt (true);
                 frag.show (getFragmentManager(), "suredialog");
             }
@@ -110,11 +111,11 @@ public class ControlActivity extends Activity {
     public boolean onCreateOptionsMenu (Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate (R.menu.aboutmenu, menu);
+        inflater.inflate (R.menu.controlmenu, menu);
         return true;
     }
 
-    public void showTwDialog (View view)
+    private void showTwDialog()
     {
         new TwDialog().show (getFragmentManager(), "TWDialog");
     }
@@ -131,10 +132,11 @@ public class ControlActivity extends Activity {
         toastUtil (R.string.copied);
     }
 
-    public void startTw (View view)
+    private void startTw()
     {
         Intent intent = getPackageManager().getLaunchIntentForPackage ("com.teamviewer.teamviewer.market.mobile");
-        this.startActivity (intent);
+        if (intent != null)
+            this.startActivity (intent);
     }
 
     private void copy (String label, String text)
@@ -170,7 +172,8 @@ public class ControlActivity extends Activity {
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected (MenuItem item)
+    {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask (this);
@@ -178,23 +181,33 @@ public class ControlActivity extends Activity {
             case R.id.about:
                 MainActivity.showAboutDialog (this);
                 return true;
+            case R.id.twdatabtn:
+                this.showTwDialog();
+                return true;
+            case R.id.starttw:
+                this.startTw();
+                return true;
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected (item);
     }
 
     private void noConnectionWindow()
     {
-        MainActivity.SimpleDialogBuilder d = MainActivity.SimpleDialogBuilder.buildDialog (R.string.err_no_conn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialog, int which)
-            {
-                dialog.dismiss();
-                setResult (RESULT_FIRST_USER);
-                finish();
+        this.runOnUiThread (new Runnable() {
+            public void run() {
+                MainActivity.SimpleDialogBuilder d = MainActivity.SimpleDialogBuilder.buildDialog (R.string.err_no_conn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick (DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+                        setResult (RESULT_FIRST_USER);
+                        finish();
+                    }
+                });
+                d.setCancelable (false);
+                d.show (getFragmentManager(), "rddialog");
             }
         });
-        d.setCancelable (false);
-        d.show (getFragmentManager(), "rddialog");
     }
 
     private String mergeStrings (Object... strings)
@@ -226,35 +239,55 @@ public class ControlActivity extends Activity {
 		).show (getFragmentManager(), "rdialog");
 	}*/
 
-    private void connFailed (String additionalData)
+    private void connFailed (final String additionalData)
     {
-        MainActivity.SimpleDialogBuilder.buildDialog (
-                getResources().getString(R.string.err_fail_conn) + ": " + additionalData
+        this.runOnUiThread (new Runnable() {
+            public void run() {
+                MainActivity.SimpleDialogBuilder.buildDialog (
+                        mergeStrings (R.string.err_fail_conn, ": ", additionalData)
                 ).show (getFragmentManager(), "rdialog");
+            }
+        });
     }
 
-    private void toastUtil (String msg)
+    private void toastUtil (final String msg)
     {
-        Toast.makeText (this, msg, Toast.LENGTH_SHORT).show();
+        this.runOnUiThread (new Runnable() {
+            public void run() {
+                Toast.makeText (ControlActivity.this, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void toastUtil (int msg)
+    private void toastUtil (final int msg)
     {
-        Toast.makeText (this, msg, Toast.LENGTH_SHORT).show();
+        this.runOnUiThread (new Runnable() {
+            public void run() {
+                Toast.makeText (ControlActivity.this, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void connFailedToast()
     {
-        Toast.makeText(this, R.string.err_fail_conn, Toast.LENGTH_SHORT).show();
+        this.runOnUiThread (new Runnable() {
+            public void run() {
+                Toast.makeText (ControlActivity.this, R.string.err_fail_conn, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void connFailed (Throwable ex)
+    private void connFailed (final Throwable ex)
     {
-        connFailed (ex.getMessage());
+        this.runOnUiThread (new Runnable() {
+            public void run() {
+                connFailed (ex.getMessage());
+            }
+        });
     }
 
     private class WritePCStateTask
-    extends AsyncTask<String, Void, Void>
+        extends AsyncTask<String, Void, Void>
     {
         @Override
         protected Void doInBackground (String... params)
@@ -301,8 +334,10 @@ public class ControlActivity extends Activity {
         {
             workingProgressDialog.dismiss();
             currentTask.setShouldInterrupt (false);
-            Switch sw = (Switch) findViewById (R.id.switch1);
+            ToggleButton sw = (ToggleButton) findViewById (R.id.toggleButton1);
             sw.setEnabled (false);
+            ((TextView) findViewById (R.id.watDoingLabel)).setText (( sw.isChecked() ? R.string.waiting_on : R.string.waiting_off ));
+            findViewById (R.id.llayout).setVisibility (View.VISIBLE);
             toastUtil (mergeStrings (R.string.done, " ", ( sw.isChecked() ? R.string.waiting_on : R.string.waiting_off )));
         }
     }
@@ -318,7 +353,7 @@ public class ControlActivity extends Activity {
             new Thread (new Runnable() {
                 public void run() {
                     ConnectivityManager mgr = (ConnectivityManager) getSystemService (Context.CONNECTIVITY_SERVICE);
-                    final Switch sw = (Switch) findViewById (R.id.switch1);
+                    final ToggleButton sw = (ToggleButton) findViewById (R.id.toggleButton1);
                     InputStream is = null;
                     try {
                         URL uri = new URL (KEEPALIVE_URL);
@@ -368,7 +403,12 @@ public class ControlActivity extends Activity {
                                         else if (!sw.isEnabled() && sw.isChecked() == val)
                                         {
                                             sw.setEnabled (true);
+                                            findViewById (R.id.llayout).setVisibility (View.GONE);
                                         }
+                                        /*else if (!sw.isEnabled() && sw.isChecked() != val && pb.getVisibility() == View.GONE)
+                                        {
+                                            pb.setVisibility (View.VISIBLE);
+                                        }*/
                                     }
                                 });
                             Thread.sleep (waitingTime);
@@ -419,7 +459,7 @@ public class ControlActivity extends Activity {
     }
 
     public static class TwDialog
-    extends DialogFragment
+        extends DialogFragment
     {
         @Override
         public Dialog onCreateDialog (Bundle savedInstanceState)
@@ -427,16 +467,15 @@ public class ControlActivity extends Activity {
             AlertDialog.Builder builder = new AlertDialog.Builder (getActivity());
             LayoutInflater inflater = getActivity().getLayoutInflater();
             builder.setView (inflater.inflate (R.layout.dialog_tw, null))
-            .setTitle (R.string.tw_data)
-            .setPositiveButton (R.string.login_error_btn_ok, new DialogInterface.OnClickListener()
-            {
-
-                @Override
-                public void onClick (DialogInterface dialog, int which)
+                .setTitle (R.string.tw_data)
+                .setPositiveButton (R.string.login_error_btn_ok, new DialogInterface.OnClickListener()
                 {
-                    TwDialog.this.getDialog().cancel();
-                }
-            });
+                    @Override
+                    public void onClick (DialogInterface dialog, int which)
+                    {
+                        TwDialog.this.getDialog().cancel();
+                    }
+                });
             return builder.create();
         }
     }
