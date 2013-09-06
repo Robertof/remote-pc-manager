@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <!-- TODO <item android:id="@+id/screenshot" android:title="@string/screenshot" android:showAsAction="never"></item> -->
-    <item android:id="@+id/twdatabtn" android:title="@string/tw_data_btn" android:showAsAction="never"></item>
-    <item android:id="@+id/starttw" android:title="@string/start_tw" android:showAsAction="never"></item>
-    <item android:id="@+id/about" android:title="@string/about" android:showAsAction="never"></item>
-	
-
-</menu>

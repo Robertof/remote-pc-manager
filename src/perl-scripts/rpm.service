@@ -1,0 +1,10 @@
+[Unit]
+Description=Remote PC Manager
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/perl /path/to/remotepcmanager.pl
+
+[Install]
+WantedBy=multi-user.target

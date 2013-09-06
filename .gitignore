@@ -2,7 +2,10 @@ bin/
 .settings/
 pull-everything.sh
 remove-sensitive-data.sh
-mirror-webserver-stuff.sh
+status.json
+webcam-sent-img.jpg
+screenshot-sent-img.jpg
+.htaccess
 # stuff from android.gitignore
 *.apk
 *.ap_
@@ -13,3 +16,4 @@ local.properties
 .classpath
 .project
 proguard/
+docs/
