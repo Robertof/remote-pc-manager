@@ -29,7 +29,7 @@ Details about the Android app
 I built the app against Android 4.0 SDK. This is because I own a Galaxy Nexus, and I was too lazy to adapt the app to an older SDK version.
 However if you want to, feel free to do it.
 
-The app asks for a password on start (which is defined with a SHA-1 hash in ControlActivity) and communicates with the PHP helper.
+The app asks for a password on start (which is defined with a SHA-1 hash in `ControlActivity.java`) and communicates with the PHP helper.
 
 Also when the user requests a screenshot or webcam request, the app automatically waits for the screenshot to be uploaded and downloads it with the built-in DownloadManager.
 
@@ -67,17 +67,17 @@ Setting up this may be a little bit complex but not as hard as the old implement
 * An Android phone with at least ICS (4.0)
 
 First, configure the following files as needed (they are well documented so you shouldn't have any difficulties):
-* android-app/src/it/robertof/rpm/ControlActivity.java
-* perl-scripts/remotepcmanager-pc.pl
-* perl-scripts/remotepcmanager-raspi.pl
-* webserver/config.php
+* `android-app/src/it/robertof/rpm/ControlActivity.java`
+* `perl-scripts/remotepcmanager-pc.pl`
+* `perl-scripts/remotepcmanager-raspi.pl`
+* `webserver/config.php`
 
 After you have edited everything, you're ready to start.
 Start by putting the PHP helper in a private space. If you are using Apache and you have enabled the auto htaccess creation, you're fine. Otherwise limit access to the 'private' directory.
 Test if there aren't any errors. Request http://example.com/trigger_action.php. You should see a string starting with 'e:'.
 
-Put the 'remotepcmanager-raspi.pl' file in your Raspberry, along with capture.cpp. Compile capture.cpp with the command specified in the header of the file and put it in the same directory of 'remotepcmanager-raspi.pl'.
-If you need to start automatically the Perl daemon on your Raspberry, then edit the included 'rpm.service' file (by adjusting the path of your RPi daemon), move it in `/usr/lib/systemd/system/rpm.service` and run `systemctl enable rpm`.
+Put the `remotepcmanager-raspi.pl` file in your Raspberry, along with `capture.cpp`. Compile `capture.cpp` with the command specified in the header of the file and put it in the same directory of `remotepcmanager-raspi.pl`.
+If you need to start automatically the Perl daemon on your Raspberry, then edit the included `rpm.service` file (by adjusting the path of your RPi daemon), move it in `/usr/lib/systemd/system/rpm.service` and run `systemctl enable rpm`.
 
 Now prepare your Perl environment on the target PC and
 * if you are running Linux, find some way on your distribution to start a perl script when the PC starts.
