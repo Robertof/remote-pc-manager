@@ -40,8 +40,8 @@ Details about the PHP helper
 
 The PHP helper is a pair of PHP files which act as a 'medium' between the various components.
 There are only two PHP files, and those are:
-* config.php: where you can define the configuration options, like the hashes for each component.
-* trigger_action.php: the file which handles every action. You should not edit this unless needed.
+* `config.php`: where you can define the configuration options, like the hashes for each component.
+* `trigger_action.php`: the file which handles every action. You should not edit this unless needed.
 
 Details about the Perl stuff
 ----------------------------
